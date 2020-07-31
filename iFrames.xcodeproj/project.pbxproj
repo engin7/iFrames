@@ -14,6 +14,8 @@
 		107093A724D3811800D0B552 /* iFramesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093A624D3811800D0B552 /* iFramesTests.swift */; };
 		107093B224D3840A00D0B552 /* MovieListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093B124D3840A00D0B552 /* MovieListVC.swift */; };
 		107093B724D393A300D0B552 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093B624D393A300D0B552 /* MovieCell.swift */; };
+		107093B924D4117C00D0B552 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093B824D4117C00D0B552 /* NetworkManager.swift */; };
+		107093BB24D41C1200D0B552 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093BA24D41C1200D0B552 /* SearchResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		107093A824D3811800D0B552 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		107093B124D3840A00D0B552 /* MovieListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListVC.swift; sourceTree = "<group>"; };
 		107093B624D393A300D0B552 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		107093B824D4117C00D0B552 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		107093BA24D41C1200D0B552 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 				1070939A24D3811800D0B552 /* LaunchScreen.storyboard */,
 				1070939D24D3811800D0B552 /* Info.plist */,
 				107093B124D3840A00D0B552 /* MovieListVC.swift */,
+				107093B824D4117C00D0B552 /* NetworkManager.swift */,
+				107093BA24D41C1200D0B552 /* SearchResult.swift */,
 				107093B624D393A300D0B552 /* MovieCell.swift */,
 			);
 			path = iFrames;
@@ -209,7 +215,9 @@
 			files = (
 				1070939024D3811500D0B552 /* AppDelegate.swift in Sources */,
 				1070939224D3811500D0B552 /* SceneDelegate.swift in Sources */,
+				107093B924D4117C00D0B552 /* NetworkManager.swift in Sources */,
 				107093B724D393A300D0B552 /* MovieCell.swift in Sources */,
+				107093BB24D41C1200D0B552 /* SearchResult.swift in Sources */,
 				107093B224D3840A00D0B552 /* MovieListVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
