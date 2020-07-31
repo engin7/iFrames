@@ -14,6 +14,8 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
     lazy var searchBar:UISearchBar = UISearchBar(frame: .zero)
     private let search = NetworkManager.shared
+    
+    private let searchText = BehaviorRelay<String?>(value: nil)
     private let disposeBag = DisposeBag()
 
     
@@ -21,8 +23,9 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         super.viewDidLoad()
         configureSearchBar()
         collectionView.backgroundColor = .white
+        collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
-
+        configureSearch()
     }
      
     func configureSearchBar() {
@@ -32,7 +35,6 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         searchBar.placeholder = " Search for movies..."
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
-        searchBar.delegate = self
         self.definesPresentationContext = true
         
     }
@@ -81,27 +83,31 @@ private extension MovieListVC {
     // let vc = ChatViewController(url: )
     // self.navigationController?.pushViewController(vc, animated: true)
     
-    
-}
- 
-extension MovieListVC: UISearchBarDelegate {
-    
-     func position(for bar: UIBarPositioning) -> UIBarPosition {
-         return .topAttached
-        }
+    func configureSearch() {
         
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.rx.text.asDriver()
+                .drive(searchText)
+                .disposed(by: disposeBag)
+
+            searchText.asObservable().subscribe(onNext: { [weak self] (text) in
+                if let vc = self, vc.searchBar.text != text {
+                    vc.searchBar.text = text
+                }
+            })
+                .disposed(by: disposeBag)
+
+             searchText.asObservable().subscribe(onNext: { [weak self] (text) in
+                self!.search.performSearch(for: self!.searchText.value!, completion: {success in
+                    if !success {
+                        self!.showNetworkError()
+                    }
+                    self!.setupCellConfiguration()
+                 })
+            })
+            .disposed(by: disposeBag)
+        }
     
-      search.performSearch(for: searchBar.text!, completion: {success in
-          
-     if !success {
-                 self.showNetworkError()
-                 }
-        self.setupCellConfiguration()
-       })
-        searchBar.resignFirstResponder()
     }
-}
-
+    
  
-
+ 
