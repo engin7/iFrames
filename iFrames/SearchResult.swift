@@ -8,11 +8,6 @@
 
 import Foundation
 
-class ResultArray: Codable {
-    var total_results = 0
-    var results = [SearchResult]()
-}
-
 class SearchResult:Codable, CustomStringConvertible {
     
   

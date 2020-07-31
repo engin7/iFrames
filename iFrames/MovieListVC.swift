@@ -7,24 +7,24 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
 
 class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     lazy var searchBar:UISearchBar = UISearchBar(frame: .zero)
     private let search = NetworkManager.shared
-    
+    private let disposeBag = DisposeBag()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureSearchBar()
         collectionView.backgroundColor = .white
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
-        configureSearchBar()
- 
+
     }
-    
-    
+     
     func configureSearchBar() {
         view.addSubview(searchBar)
         navigationItem.titleView = searchBar
@@ -35,49 +35,8 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         searchBar.delegate = self
         self.definesPresentationContext = true
         
-        
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch NetworkManager.shared.state {
-         case .notSearchedYet:
-           return 0
-         case .loading:
-           return 1
-         case .noResults:
-           return 1
-         case .results(let list):
-           return list.count
-        }
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
-        
-        switch NetworkManager.shared.state {
-             case .notSearchedYet:
-               fatalError("Not possible")
-               
-             case .loading:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MovieCell
-           
-                
-               return cell
-               
-             case .noResults:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MovieCell
-               cell.titleLabel.text = "Sorry, nothing found"
-                return cell
-               
-             case .results(let list):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MovieCell
-                
-                cell.titleLabel.text = list[indexPath.row].title
-                return cell
-        }
-        
-    }
- 
+   
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 200)
     }
@@ -92,6 +51,33 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
 }
 
+
+//MARK: - Rx Setup
+// reactive Observer to update the   automatically.
+private extension MovieListVC {
+    
+    func setupCellConfiguration() {
+        
+        collectionView.dataSource = nil // before creating our new datasource with .bind
+
+        switch search.state {
+             case .results(let list):
+               list.asObservable()
+               .bind(to: collectionView
+               .rx
+               .items(cellIdentifier: "Cell",
+                cellType: MovieCell.self)) { _, element, cell in
+                cell.titleLabel.text = element.title
+               }
+               .disposed(by: disposeBag)
+             default:
+               break
+// FIXME: !!
+// TODO: show loading, not found cell etc..
+             }
+     }
+}
+ 
 extension MovieListVC: UISearchBarDelegate {
     
      func position(for bar: UIBarPositioning) -> UIBarPosition {
@@ -103,16 +89,13 @@ extension MovieListVC: UISearchBarDelegate {
       search.performSearch(for: searchBar.text!, completion: {success in
           
      if !success {
-                self.showNetworkError()
-              }
-              self.collectionView.reloadData()
-             })
-            
-            collectionView.reloadData()
-            searchBar.resignFirstResponder()
-          }
-    
+                 self.showNetworkError()
+                 }
+        self.setupCellConfiguration()
+       })
+        searchBar.resignFirstResponder()
     }
+}
 
  
 
