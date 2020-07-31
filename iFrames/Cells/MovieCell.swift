@@ -13,7 +13,6 @@ class MovieCell: UICollectionViewCell {
            let lb  = UILabel()
            lb.text = "Movie Name"
            lb.font = UIFont.boldSystemFont(ofSize: 14)
-           lb.font = UIFont.boldSystemFont(ofSize: 14)
            lb.translatesAutoresizingMaskIntoConstraints = false
            return lb
        }()

@@ -38,7 +38,7 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: 100)
     }
     
     func showNetworkError() {
@@ -72,10 +72,16 @@ private extension MovieListVC {
                .disposed(by: disposeBag)
              default:
                break
-// FIXME: !!
-// TODO: show loading, not found cell etc..
+// FIXME: show loading, not found cell etc..
              }
      }
+    
+    
+// TODO: Tapping function .modelSelected
+    // let vc = ChatViewController(url: )
+    // self.navigationController?.pushViewController(vc, animated: true)
+    
+    
 }
  
 extension MovieListVC: UISearchBarDelegate {
