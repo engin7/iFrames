@@ -22,7 +22,7 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchBar()
-        configureSearch() //call Rx function
+        configureSearch() //call Rx functions
         collectionView.backgroundColor = .white
         collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
@@ -70,13 +70,14 @@ private extension MovieListVC {
                .items(cellIdentifier: "Cell",
                 cellType: MovieCell.self)) { _, element, cell in
                 cell.titleLabel.text = element.title
-               }
+                cell.releaseDate.text = String(element.release_date?.prefix(4) ?? "unknown")
+                }
                .disposed(by: disposeBag)
              default:
                break
-// FIXME: show loading, not found cell etc..
-             }
-     }
+           // FIXME: show loading, not found cell etc..
+        }
+    }
     
     func setupCellTapHandling() {
       collectionView
@@ -87,18 +88,17 @@ private extension MovieListVC {
            
           if let selectedRowIndexPath = self.collectionView.indexPathsForSelectedItems?.first
           {
+            // don't select multiple items
             self.collectionView.deselectItem(at: selectedRowIndexPath, animated: true)
-//            print(result)
+            let vc = MovieDetailVC(url: "lokum" )
+            self.navigationController?.pushViewController(vc, animated: true)
           }
         })
-        .disposed(by: disposeBag)
+      .disposed(by: disposeBag)
     }
-    
-    
-// TODO: Tapping function .modelSelected
-    // let vc = ChatViewController(url: )
-    // self.navigationController?.pushViewController(vc, animated: true)
-    
+     
+    // TODO: Tap to push next
+
     func configureSearch() {
         searchBar.rx.text.asDriver()
                 .drive(searchText)
@@ -121,8 +121,5 @@ private extension MovieListVC {
                  })
             })
             .disposed(by: disposeBag)
-        }
     }
-    
- 
- 
+}

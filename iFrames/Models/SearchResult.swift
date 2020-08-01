@@ -16,7 +16,7 @@ struct SearchResult:Codable, CustomStringConvertible {
     
     var title: String? = ""
     var overview: String? = ""
-    var release_date:String?
+    var release_date:String? = ""
     var averageVote: Double?
     var popularity: Double?
     var vote_count: Double?
