@@ -8,8 +8,7 @@
 
 import Foundation
 
-class SearchResult:Codable, CustomStringConvertible {
-    
+struct SearchResult:Codable, CustomStringConvertible {
   
     var description: String {
       return "Name: \(title ?? "None"), Summary: \(overview ?? "None")\n"

@@ -22,10 +22,10 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchBar()
+        configureSearch() //call Rx function
         collectionView.backgroundColor = .white
         collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
-        configureSearch()
     }
      
     func configureSearchBar() {
@@ -78,13 +78,28 @@ private extension MovieListVC {
              }
      }
     
+    func setupCellTapHandling() {
+      collectionView
+        .rx
+        .modelSelected(SearchResult.self) // return Observable
+        // Taking that Observable, call subscribe(onNext:), passing in a closure of what should be done any time a model is selected
+        .subscribe(onNext: { [unowned self] result in
+           
+          if let selectedRowIndexPath = self.collectionView.indexPathsForSelectedItems?.first
+          {
+            self.collectionView.deselectItem(at: selectedRowIndexPath, animated: true)
+//            print(result)
+          }
+        })
+        .disposed(by: disposeBag)
+    }
+    
     
 // TODO: Tapping function .modelSelected
     // let vc = ChatViewController(url: )
     // self.navigationController?.pushViewController(vc, animated: true)
     
     func configureSearch() {
-        
         searchBar.rx.text.asDriver()
                 .drive(searchText)
                 .disposed(by: disposeBag)
@@ -102,11 +117,11 @@ private extension MovieListVC {
                         self!.showNetworkError()
                     }
                     self!.setupCellConfiguration()
+                    self!.setupCellTapHandling()
                  })
             })
             .disposed(by: disposeBag)
         }
-    
     }
     
  
