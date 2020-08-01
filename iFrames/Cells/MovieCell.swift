@@ -11,19 +11,23 @@ class MovieCell: UICollectionViewCell {
     
     let titleLabel     = UILabel()
     let releaseDate    = UILabel()
+    let rating         = UILabel()
+    let voteCount      = UILabel()
     let listImageView  = UIImageView()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .gray
+        backgroundColor = UIColor(red:204/255, green:204/255, blue:204/255, alpha:0.7)
         addSubview(titleLabel)
         addSubview(releaseDate)
         addSubview(listImageView)
+        addSubview(rating)
+        addSubview(voteCount)
 
         listImageView.translatesAutoresizingMaskIntoConstraints = false
         listImageView.clipsToBounds = true
-        listImageView.frame = CGRect(x: 8, y: 8, width: 84, height: 84)
+        listImageView.frame = CGRect(x: 0, y: 0, width: 92, height: 138)
         listImageView.backgroundColor = .blue
         
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -33,8 +37,18 @@ class MovieCell: UICollectionViewCell {
 
         releaseDate.font = UIFont.boldSystemFont(ofSize: 14)
         releaseDate.translatesAutoresizingMaskIntoConstraints = false
-        releaseDate.topAnchor.constraint(equalTo: topAnchor, constant: 36).isActive = true
+        releaseDate.topAnchor.constraint(equalTo: topAnchor, constant: 32).isActive = true
         releaseDate.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
+        
+        rating.font = UIFont.boldSystemFont(ofSize: 12)
+        rating.translatesAutoresizingMaskIntoConstraints = false
+        rating.topAnchor.constraint(equalTo: topAnchor, constant: 58).isActive = true
+        rating.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
+        
+        voteCount.font = UIFont.boldSystemFont(ofSize: 12)
+        voteCount.translatesAutoresizingMaskIntoConstraints = false
+        voteCount.topAnchor.constraint(equalTo: topAnchor, constant: 76).isActive = true
+        voteCount.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

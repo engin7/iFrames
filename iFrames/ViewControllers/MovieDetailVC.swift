@@ -10,14 +10,18 @@ import UIKit
 
 class MovieDetailVC: UIViewController {
     
-    let moviePath: String
-//    let movieImage: UIImage?
-    
-    init(url: String) {
-       
-      self.moviePath = url
+    let movie: SearchResult
+    let overview   = UILabel()
+    let movieImage = UIImageView()
+    var downloadTask: URLSessionDownloadTask?
+
+    init(movie: SearchResult) {
+      self.movie = movie
+      self.overview.text = movie.overview
+      self.downloadTask = NetworkManager.shared.loadImage(imageView: movieImage, path: movie.image, size: 342)
       super.init(nibName: nil, bundle: nil)
-      title =  "test"
+      title =  movie.title
+        
     }
     
     required init?(coder: NSCoder) {
@@ -27,10 +31,27 @@ class MovieDetailVC: UIViewController {
     
    override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
          
     }
     
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+
+        self.view.backgroundColor = .white
+        view.addSubview(movieImage)
+        view.addSubview(overview)
+        
+        movieImage.translatesAutoresizingMaskIntoConstraints = false
+        movieImage.clipsToBounds = true
+        movieImage.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: (view.frame.height - view.frame.width/1.5) / 5, width: view.frame.width/1.5, height: view.frame.width)
+        movieImage.contentMode = .scaleAspectFit
+        
+        overview.translatesAutoresizingMaskIntoConstraints = false
+        overview.font = UIFont.boldSystemFont(ofSize: 16)
+        overview.translatesAutoresizingMaskIntoConstraints = false
+        overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: (view.frame.height - view.frame.width/1.2), width: view.frame.width/1.5, height: view.frame.width)
+        overview.numberOfLines = 8
+    }
     
 }
 

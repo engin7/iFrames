@@ -14,7 +14,8 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
     lazy var searchBar:UISearchBar = UISearchBar(frame: .zero)
     private let search = NetworkManager.shared
-    
+    var downloadTask: URLSessionDownloadTask?
+
     private let searchText = BehaviorRelay<String?>(value: nil)
     private let disposeBag = DisposeBag()
 
@@ -26,6 +27,10 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         collectionView.backgroundColor = .white
         collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
+    }
+    
+    deinit {
+       downloadTask?.cancel()
     }
      
     func configureSearchBar() {
@@ -40,7 +45,7 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     }
    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+        return CGSize(width: view.frame.width, height: 138)
     }
     
     func showNetworkError() {
@@ -71,6 +76,10 @@ private extension MovieListVC {
                 cellType: MovieCell.self)) { _, element, cell in
                 cell.titleLabel.text = element.title
                 cell.releaseDate.text = String(element.release_date?.prefix(4) ?? "unknown")
+                cell.rating.text = "rating: ★  \(element.averageVote ?? 0.00) "
+                cell.voteCount.text = "total votes: \(Int(element.vote_count ?? 0)) "
+                    self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.image, size: 92)
+                   
                 }
                .disposed(by: disposeBag)
              default:
@@ -90,15 +99,13 @@ private extension MovieListVC {
           {
             // don't select multiple items
             self.collectionView.deselectItem(at: selectedRowIndexPath, animated: true)
-            let vc = MovieDetailVC(url: "lokum" )
+            let vc = MovieDetailVC(movie: result)
             self.navigationController?.pushViewController(vc, animated: true)
           }
         })
       .disposed(by: disposeBag)
     }
      
-    // TODO: Tap to push next
-
     func configureSearch() {
         searchBar.rx.text.asDriver()
                 .drive(searchText)
