@@ -83,7 +83,7 @@ private extension MovieListVC {
                 }
                .disposed(by: disposeBag)
              default:
-               break
+               return
            // FIXME: show loading, not found cell etc..
         }
     }

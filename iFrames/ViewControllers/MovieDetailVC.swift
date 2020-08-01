@@ -12,7 +12,6 @@ import RxCocoa
 
 class MovieDetailVC: UIViewController {
     
-     
     let movie :  BehaviorRelay<SearchResult>
     let overview   = UILabel()
     let movieImage = UIImageView()
@@ -28,10 +27,9 @@ class MovieDetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
    override func viewDidLoad() {
         super.viewDidLoad()
-        setupCartObserver()
+        setupCellConfiguration()
     }
     
     override func viewDidLayoutSubviews() {
@@ -57,7 +55,7 @@ class MovieDetailVC: UIViewController {
     
     //MARK: - Rx Setup
 
-    func setupCartObserver() {
+    func setupCellConfiguration() {
       movie.asObservable() //  .subscribe(onNext: to discover changes to the Observable’s value.
         .subscribe(onNext: { [unowned self] movie in
             self.overview.text = movie.overview
