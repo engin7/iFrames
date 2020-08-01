@@ -18,7 +18,7 @@ class MovieCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(red:204/255, green:204/255, blue:204/255, alpha:0.7)
+        backgroundColor = .white
         addSubview(titleLabel)
         addSubview(releaseDate)
         addSubview(listImageView)
@@ -29,7 +29,9 @@ class MovieCell: UICollectionViewCell {
         listImageView.clipsToBounds = true
         listImageView.frame = CGRect(x: 0, y: 0, width: 92, height: 138)
         listImageView.backgroundColor = .blue
-        
+        listImageView.layer.cornerRadius = 20
+        listImageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true

@@ -38,6 +38,7 @@ class MovieDetailVC: UIViewController {
       super.viewDidLayoutSubviews()
 
         self.view.backgroundColor = .white
+
         view.addSubview(movieImage)
         view.addSubview(overview)
         
@@ -45,6 +46,7 @@ class MovieDetailVC: UIViewController {
         movieImage.clipsToBounds = true
         movieImage.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: (view.frame.height - view.frame.width/1.5) / 5, width: view.frame.width/1.5, height: view.frame.width)
         movieImage.contentMode = .scaleAspectFit
+        movieImage.layer.cornerRadius = 40
         
         overview.translatesAutoresizingMaskIntoConstraints = false
         overview.font = UIFont.boldSystemFont(ofSize: 16)
