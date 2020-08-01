@@ -24,7 +24,7 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         super.viewDidLoad()
         configureSearchBar()
         configureSearch() //call Rx functions
-        collectionView.backgroundColor = UIColor(red:204/255, green:204/255, blue:204/255, alpha:0.7)
+        collectionView.backgroundColor = .systemGray5
         collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
     }

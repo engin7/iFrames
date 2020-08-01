@@ -7,21 +7,21 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MovieDetailVC: UIViewController {
     
-    let movie: SearchResult
+     
+    let movie :  BehaviorRelay<SearchResult>
     let overview   = UILabel()
     let movieImage = UIImageView()
     var downloadTask: URLSessionDownloadTask?
+    private let disposeBag = DisposeBag()
 
     init(movie: SearchResult) {
-      self.movie = movie
-      self.overview.text = movie.overview
-      self.downloadTask = NetworkManager.shared.loadImage(imageView: movieImage, path: movie.image, size: 342)
-      super.init(nibName: nil, bundle: nil)
-      title =  movie.title
-        
+        self.movie = BehaviorRelay(value: movie)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +31,7 @@ class MovieDetailVC: UIViewController {
     
    override func viewDidLoad() {
         super.viewDidLoad()
-         
+        setupCartObserver()
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,6 +53,18 @@ class MovieDetailVC: UIViewController {
         overview.translatesAutoresizingMaskIntoConstraints = false
         overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: (view.frame.height - view.frame.width/1.2), width: view.frame.width/1.5, height: view.frame.width)
         overview.numberOfLines = 8
+    }
+    
+    //MARK: - Rx Setup
+
+    func setupCartObserver() {
+      movie.asObservable() //  .subscribe(onNext: to discover changes to the Observable’s value.
+        .subscribe(onNext: { [unowned self] movie in
+            self.overview.text = movie.overview
+            self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path: movie.image, size: 342)
+            self.title =  movie.title
+        })
+        .disposed(by: disposeBag)
     }
     
 }

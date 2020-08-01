@@ -28,7 +28,7 @@ class MovieCell: UICollectionViewCell {
         listImageView.translatesAutoresizingMaskIntoConstraints = false
         listImageView.clipsToBounds = true
         listImageView.frame = CGRect(x: 0, y: 0, width: 92, height: 138)
-        listImageView.backgroundColor = .blue
+        listImageView.backgroundColor = .systemGray6
         listImageView.layer.cornerRadius = 20
         listImageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
 
