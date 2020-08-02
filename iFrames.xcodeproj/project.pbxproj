@@ -98,7 +98,7 @@
 				1070939A24D3811800D0B552 /* LaunchScreen.storyboard */,
 				1070939824D3811800D0B552 /* Assets.xcassets */,
 				1070939D24D3811800D0B552 /* Info.plist */,
-				107093B824D4117C00D0B552 /* NetworkManager.swift */,
+				107093C324D6341100D0B552 /* NetworkLayer */,
 				107093C224D4B9BC00D0B552 /* Models */,
 				107093C124D4B96600D0B552 /* Cells */,
 				107093C024D4B92E00D0B552 /* ViewControllers */,
@@ -145,6 +145,14 @@
 				107093BA24D41C1200D0B552 /* SearchResult.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		107093C324D6341100D0B552 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				107093B824D4117C00D0B552 /* NetworkManager.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 		1B7A00D1E9DBFC686E89B587 /* Pods */ = {
