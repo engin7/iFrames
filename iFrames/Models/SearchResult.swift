@@ -9,26 +9,26 @@
 import Foundation
 
 struct SearchResult:Codable, CustomStringConvertible {
-  
+    
     var description: String {
       return "Name: \(title ?? "None"), Summary: \(overview ?? "None")\n"
     }
     
-    var title: String? = ""
-    var overview: String? = ""
-    var release_date:String? = ""
+    var title: String?
+    var overview: String?
+    var release_date:String?
+    var image  = ""
     var averageVote: Double?  
     var popularity: Double?
     var vote_count: Double?
-    var image = ""
-
+    var id: Int = 0
+    
    enum CodingKeys: String, CodingKey {
       case image = "poster_path"
       case averageVote = "vote_average"
       case title, overview, release_date
-      case popularity, vote_count
+      case popularity, vote_count, id
    }
-    
 }
 
 // TODO: show genres

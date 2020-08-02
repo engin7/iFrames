@@ -12,16 +12,17 @@ import RxCocoa
 
 // Network Response
 class ResultArray: Codable {
-    var total_results = 0
     var results = [SearchResult]()
 }
 
+ 
 // Network Request
 class NetworkManager {
 static let shared = NetworkManager() // singleton
-private let apiKey = "719f4948418af6489623d9d9de284d48"
+private let apiKey = "?api_key=719f4948418af6489623d9d9de284d48"
 private let baseURL = "https://api.themoviedb.org/3/search/movie?api_key=719f4948418af6489623d9d9de284d48&query=%@"
 private let top100URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=719f4948418af6489623d9d9de284d48&language=en-US&page="
+private let movieDetailURL = "https://api.themoviedb.org/3/movie/"
     
 var state: State = .notSearchedYet
 private var dataTask: URLSessionDataTask? = nil
@@ -30,9 +31,10 @@ private init() {}
  
     enum State {
       case notSearchedYet
-       case loading
+      case loading
       case noResults
       case results(BehaviorRelay<[SearchResult]>)
+      case result(SearchResult)
     }
     
 typealias SearchComplete = (Bool) -> Void
@@ -53,7 +55,7 @@ typealias SearchComplete = (Bool) -> Void
                 if let error = error as NSError?, error.code == -999 {
                     return
                 }
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
+                if  let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                     let searchResults = self.parse(data: data)
                     
                     if  searchResults.isEmpty {
@@ -100,6 +102,30 @@ typealias SearchComplete = (Bool) -> Void
             dataTask?.resume()
         }
     }
+    
+    func movieDetail(for id: Int, completion: @escaping SearchComplete) {
+        
+        var searchResult: SearchResult?
+        let url = URL(string: "https://api.themoviedb.org/3/movie/" + String(id) + "?api_key=719f4948418af6489623d9d9de284d48")
+        let session = URLSession.shared
+        let success = false
+        let dataTask = session.dataTask(with: url!, completionHandler: {data, response, error in
+             // if the search cancelled ignore error code and return
+            if let error = error as NSError?, error.code == -999 {
+                return
+            }
+            if  let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
+                searchResult = self.parseDetail(data: data)
+                let newState = State.result(searchResult!)
+                DispatchQueue.main.async {
+                   self.state = newState
+                    completion(success) //Bool
+               }
+            }
+        })
+        dataTask.resume()
+    }
+    
     func loadImage(imageView: UIImageView, path: String, size: Int) -> URLSessionDownloadTask {
         let session = URLSession.shared
         let url = URL(string: "http://image.tmdb.org/t/p/w" + String(size) + path)!
@@ -135,5 +161,15 @@ typealias SearchComplete = (Bool) -> Void
           } catch {
             print("JSON Error: \(error)")
         return [] }
+      }
+    
+     private func parseDetail(data: Data) -> SearchResult? {
+          do {
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(SearchResult.self, from:data)
+             return result
+          } catch {
+            print("JSON Error: \(error)")
+        return nil }
       }
 }
