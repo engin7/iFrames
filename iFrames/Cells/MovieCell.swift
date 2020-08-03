@@ -14,7 +14,8 @@ class MovieCell: UICollectionViewCell {
     let rating         = UILabel()
     let voteCount      = UILabel()
     let listImageView  = UIImageView()
-    
+    var imagePath      = ""
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
