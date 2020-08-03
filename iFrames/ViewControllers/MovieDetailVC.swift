@@ -14,6 +14,7 @@ import Network
 class MovieDetailVC: UIViewController {
     
     var movie :  BehaviorRelay<SearchResult>
+    let movieID: Int
     let overview   = UILabel()
     let movieImage = UIImageView()
     var downloadTask: URLSessionDownloadTask?
@@ -21,9 +22,11 @@ class MovieDetailVC: UIViewController {
     private let search = NetworkManager.shared
     let monitor = NWPathMonitor()
     let queue = DispatchQueue(label: "Monitor")
+    var flag = false
 
     init(movie: SearchResult) {
-        self.movie = BehaviorRelay(value: movie)
+        self.movie   = BehaviorRelay(value: movie)
+        self.movieID = movie.id
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,8 +40,9 @@ class MovieDetailVC: UIViewController {
             if pathUpdateHandler.status == .satisfied {
                 print("Internet connection is on.")
                 //update movie by network call for updated values (rating, #votes etc)
+                if self.flag == true {
                 var updatedMovie: SearchResult?
-                self.search.movieDetail(for: self.movie.value.id, completion: {success in
+                self.search.movieDetail(for: self.movieID, completion: {success in
                     switch self.search.state {
                      case .result(let item):
                      updatedMovie = item
@@ -47,6 +51,8 @@ class MovieDetailVC: UIViewController {
                     }
                     self.movie = BehaviorRelay(value: updatedMovie!)
                  })
+              }
+                self.flag = true
             } else {
                  print("There's no internet connection.")
             }
@@ -76,7 +82,6 @@ class MovieDetailVC: UIViewController {
         overview.numberOfLines = 8
     }
     
- 
     
     //MARK: - Rx Setup
 
@@ -84,7 +89,7 @@ class MovieDetailVC: UIViewController {
       movie.asObservable() //  .subscribe(onNext: to discover changes to the Observable’s value.
         .subscribe(onNext: { [unowned self] movie in
             self.overview.text = movie.overview
-            self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path: movie.image, size: 342)
+            self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path: movie.imagePath, size: 342)
             self.title =  movie.title
         })
         .disposed(by: disposeBag)

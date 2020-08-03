@@ -21,7 +21,7 @@ class NetworkManager {
     
 let realm = try! Realm()  // better to use do-catch, here simplified.
 lazy var top100: Results<SearchResult> = { self.realm.objects(SearchResult.self) }() // fetch objects
-
+ 
 static let shared = NetworkManager() // singleton
 private let apiKey = "?api_key=719f4948418af6489623d9d9de284d48"
 private let baseURL = "https://api.themoviedb.org/3/search/movie?api_key=719f4948418af6489623d9d9de284d48&query=%@"

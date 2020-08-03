@@ -78,7 +78,7 @@ private extension MovieListVC {
                 cell.releaseDate.text = String(element.release_date.prefix(4) )
                 cell.rating.text = "rating: ★  \(element.averageVote ) "
                 cell.voteCount.text = "total votes: \(Int(element.vote_count )) "
-                self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.image, size: 92)
+                self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.imagePath, size: 92)
                    
                 }
                .disposed(by: disposeBag)
