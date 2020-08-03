@@ -69,16 +69,16 @@ private extension MovieListVC {
 
         switch search.state {
              case .results(let list):
-               list.asObservable()
+                list.asObservable()
                .bind(to: collectionView
                .rx
                .items(cellIdentifier: "Cell",
                 cellType: MovieCell.self)) { _, element, cell in
                 cell.titleLabel.text = element.title
-                cell.releaseDate.text = String(element.release_date?.prefix(4) ?? "unknown")
-                cell.rating.text = "rating: ★  \(element.averageVote ?? 0.00) "
-                cell.voteCount.text = "total votes: \(Int(element.vote_count ?? 0)) "
-                    self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.image, size: 92)
+                cell.releaseDate.text = String(element.release_date.prefix(4) )
+                cell.rating.text = "rating: ★  \(element.averageVote ) "
+                cell.voteCount.text = "total votes: \(Int(element.vote_count )) "
+                self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.image, size: 92)
                    
                 }
                .disposed(by: disposeBag)
@@ -123,8 +123,11 @@ private extension MovieListVC {
                     if !success {
                         self!.showNetworkError()
                     }
-                    self!.setupCellConfiguration()
-                    self!.setupCellTapHandling()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //fetch realm data
+                        self!.setupCellConfiguration()
+                        self!.setupCellTapHandling()
+                          }
+            
                  })
             })
             .disposed(by: disposeBag)

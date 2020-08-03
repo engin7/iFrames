@@ -7,21 +7,18 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct SearchResult:Codable, CustomStringConvertible {
+class SearchResult: Object,Codable {
     
-    var description: String {
-      return "Name: \(title ?? "None"), Summary: \(overview ?? "None")\n"
-    }
-    
-    var title: String?
-    var overview: String?
-    var release_date:String?
-    var image  = ""
-    var averageVote: Double?  
-    var popularity: Double?
-    var vote_count: Double?
-    var id: Int = 0
+    @objc dynamic var title = ""
+    @objc dynamic var overview = ""
+    @objc dynamic var release_date = ""
+    @objc dynamic var image = ""
+    @objc dynamic var averageVote = 0.0
+    @objc dynamic var popularity = 0.0
+    @objc dynamic var vote_count = 0.0
+    @objc dynamic var id = 0
     
    enum CodingKeys: String, CodingKey {
       case image = "poster_path"

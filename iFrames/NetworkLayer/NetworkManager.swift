@@ -9,15 +9,19 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 // Network Response
-class ResultArray: Codable {
-    var results = [SearchResult]()
+class ResultArray:  Codable {
+     var results = [SearchResult]()
 }
 
- 
 // Network Request
 class NetworkManager {
+    
+let realm = try! Realm()  // better to use do-catch, here simplified.
+lazy var top100: Results<SearchResult> = { self.realm.objects(SearchResult.self) }() // fetch objects
+
 static let shared = NetworkManager() // singleton
 private let apiKey = "?api_key=719f4948418af6489623d9d9de284d48"
 private let baseURL = "https://api.themoviedb.org/3/search/movie?api_key=719f4948418af6489623d9d9de284d48&query=%@"
@@ -44,17 +48,21 @@ typealias SearchComplete = (Bool) -> Void
         var searchResult: [SearchResult] = []
         dataTask?.cancel()  // new search cancels old one
         var newState = State.notSearchedYet
+        
         //TODO: adjust for top 100
         if text.isEmpty {
+            if top100.count == 0 { // database has no records
+              
             for index in 1...5 {
             url = URL(string: top100URL + "\(index)")
             let session = URLSession.shared
             dataTask = session.dataTask(with: url!, completionHandler: {data, response, error in
                 var success = false
-                // if the search cancelled ignore error code and return
+                // if the dataTask cancelled ignore error code
                 if let error = error as NSError?, error.code == -999 {
                     return
                 }
+                
                 if  let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                     let searchResults = self.parse(data: data)
                     
@@ -68,11 +76,27 @@ typealias SearchComplete = (Bool) -> Void
                 DispatchQueue.main.async {
                     completion(success) //Bool
                     self.state = newState
+                    try! self.realm.write() { // add some records to the database.
+                        for result in searchResult { // add results to realmDataBase
+                         var newResult = SearchResult()
+                         newResult = result
+                        self.realm.add(newResult)
+                       }
+                   }
                 }
             })
-            dataTask?.resume()
+                dataTask?.resume()
+                    }
+           
+            } else {
+                newState = .loading
+                newState = .results(BehaviorRelay(value: Array(self.top100))) //fetch
+                completion(true)
+                self.state = newState
+                
+            }
         }
-        }
+        
         if !text.isEmpty {
             state = .loading
             url = themoviedbURL(searchText: text)
