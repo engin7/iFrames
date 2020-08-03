@@ -15,12 +15,11 @@ class SearchResult: Object,Codable {
     @objc dynamic var overview = ""
     @objc dynamic var release_date = ""
     @objc dynamic var imagePath = ""
-    @objc dynamic var imageView = ""
     @objc dynamic var averageVote = 0.0
     @objc dynamic var popularity = 0.0
     @objc dynamic var vote_count = 0.0
     @objc dynamic var id = 0
-    
+
    enum CodingKeys: String, CodingKey {
       case imagePath = "poster_path"
       case averageVote = "vote_average"

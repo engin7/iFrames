@@ -78,8 +78,11 @@ private extension MovieListVC {
                 cell.releaseDate.text = String(element.release_date.prefix(4) )
                 cell.rating.text = "rating: ★  \(element.averageVote ) "
                 cell.voteCount.text = "total votes: \(Int(element.vote_count )) "
+                if let image = PersistenceManager.getSavedImage(named: element.imagePath) {
+                cell.listImageView.image = image //read image from local path
+                } else {  // write image to local path for first time loading
                 self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.imagePath, size: 92)
-                   
+                }
                 }
                .disposed(by: disposeBag)
              default:
