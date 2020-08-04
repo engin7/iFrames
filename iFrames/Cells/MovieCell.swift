@@ -44,14 +44,32 @@ class MovieCell: UICollectionViewCell {
         genre1.font = UIFont.boldSystemFont(ofSize: 12)
         genre1.translatesAutoresizingMaskIntoConstraints = false
         genre1.topAnchor.constraint(equalTo: topAnchor, constant: 55).isActive = true
-        genre1.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(200)).isActive = true
         genre1.layer.masksToBounds = true
         genre1.layer.cornerRadius = 5.0
+        
+        self.addConstraint(NSLayoutConstraint(
+               item: genre1,
+               attribute: .left,
+               relatedBy: .equal,
+               toItem: genre0,
+               attribute: .right,
+               multiplier: 1.0,
+               constant: 10
+               ))
+        
+        self.addConstraint(NSLayoutConstraint(
+                      item: genre2,
+                      attribute: .left,
+                      relatedBy: .equal,
+                      toItem: genre1,
+                      attribute: .right,
+                      multiplier: 1.0,
+                      constant: 10
+                      ))
         
         genre2.font = UIFont.boldSystemFont(ofSize: 12)
         genre2.translatesAutoresizingMaskIntoConstraints = false
         genre2.topAnchor.constraint(equalTo: topAnchor, constant: 55).isActive = true
-        genre2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(280)).isActive = true
         genre2.layer.masksToBounds = true
         genre2.layer.cornerRadius = 5.0
         
@@ -66,6 +84,11 @@ class MovieCell: UICollectionViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.1
+        titleLabel.numberOfLines = 1
+
 
         releaseDate.font = UIFont.boldSystemFont(ofSize: 14)
         releaseDate.translatesAutoresizingMaskIntoConstraints = false

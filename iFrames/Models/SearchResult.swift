@@ -32,110 +32,30 @@ class SearchResult: Object,Codable {
      
     var labels: [String] {
         var arrayOfValues: [String] = []
-         for  genre  in genres {
-        switch  genre {
-        case 28: arrayOfValues.append("Action")
-        case 12: arrayOfValues.append("Adventure")
-        case 16: arrayOfValues.append("Animation")
-        case 35: arrayOfValues.append("Comedy")
-        case 80: arrayOfValues.append("Crime")
-        case 18: arrayOfValues.append("Drama")
-        case 10751: arrayOfValues.append("Family")
- 
-        default: break
-        }
+        for  genre  in genres {
+            switch  genre {
+            case 28: arrayOfValues.append("Action")
+            case 12: arrayOfValues.append("Adventure")
+            case 16: arrayOfValues.append("Animation")
+            case 35: arrayOfValues.append("Comedy")
+            case 80: arrayOfValues.append("Crime")
+            case 18: arrayOfValues.append("Drama")
+            case 10751: arrayOfValues.append("Family")
+            case 14: arrayOfValues.append("Fantasy")
+            case 36: arrayOfValues.append("History")
+            case 27: arrayOfValues.append("Horror")
+            case 10402: arrayOfValues.append("Music")
+            case 9648: arrayOfValues.append("Mystery")
+            case 10749: arrayOfValues.append("Romance")
+            case 878: arrayOfValues.append("Science Fiction")
+            case 10770: arrayOfValues.append("TV Movie")
+            case 53: arrayOfValues.append("Thriller")
+            case 10752: arrayOfValues.append("War")
+            case 37: arrayOfValues.append("Western")
+            default: break
+            }
         }
             return  arrayOfValues
     }
-    
-    
 }
-
- 
-
- 
- 
-
-// TODO: show genres
-
-//
-//{
-//  "genres": [
-//    {
-//      "id": 28,
-//      "name": "Action"
-//    },
-//    {
-//      "id": 12,
-//      "name": "Adventure"
-//    },
-//    {
-//      "id": 16,
-//      "name": "Animation"
-//    },
-//    {
-//      "id": 35,
-//      "name": "Comedy"
-//    },
-//    {
-//      "id": 80,
-//      "name": "Crime"
-//    },
-//    {
-//      "id": 99,
-//      "name": "Documentary"
-//    },
-//    {
-//      "id": 18,
-//      "name": "Drama"
-//    },
-//    {
-//      "id": 10751,
-//      "name": "Family"
-//    },
-//    {
-//      "id": 14,
-//      "name": "Fantasy"
-//    },
-//    {
-//      "id": 36,
-//      "name": "History"
-//    },
-//    {
-//      "id": 27,
-//      "name": "Horror"
-//    },
-//    {
-//      "id": 10402,
-//      "name": "Music"
-//    },
-//    {
-//      "id": 9648,
-//      "name": "Mystery"
-//    },
-//    {
-//      "id": 10749,
-//      "name": "Romance"
-//    },
-//    {
-//      "id": 878,
-//      "name": "Science Fiction"
-//    },
-//    {
-//      "id": 10770,
-//      "name": "TV Movie"
-//    },
-//    {
-//      "id": 53,
-//      "name": "Thriller"
-//    },
-//    {
-//      "id": 10752,
-//      "name": "War"
-//    },
-//    {
-//      "id": 37,
-//      "name": "Western"
-//    }
-//  ]
-//}
+  
