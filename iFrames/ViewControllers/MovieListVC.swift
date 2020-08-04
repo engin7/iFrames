@@ -76,6 +76,33 @@ private extension MovieListVC {
                 cellType: MovieCell.self)) { _, element, cell in
                 cell.titleLabel.text = element.title
                 cell.releaseDate.text = String(element.release_date.prefix(4) )
+                    
+                    cell.genre0.text = nil
+                    cell.genre1.text = nil
+                    cell.genre2.text = nil
+                    
+                    cell.genre0.layer.borderWidth = 0.0
+                    cell.genre1.layer.borderWidth = 0.0
+                    cell.genre2.layer.borderWidth = 0.0
+                     
+                if element.labels.indices.contains(0) == true {
+                    cell.genre0.text = element.labels[0]
+                    cell.genre0.layer.borderWidth = 0.5
+                    cell.genre0.backgroundColor = .systemGray4
+                }
+                if element.labels.indices.contains(1) == true {
+                    cell.genre1.text =  element.labels[1]
+                    cell.genre1.backgroundColor = .systemGray4
+                    cell.genre1.layer.borderWidth = 0.5
+
+                }
+                if element.labels.indices.contains(2) == true {
+                    cell.genre2.text = element.labels[2]
+                    cell.genre2.backgroundColor = .systemGray4
+                    cell.genre2.layer.borderWidth = 0.5
+
+                }
+                    
                 cell.rating.text = "rating: ★  \(element.averageVote ) "
                 cell.voteCount.text = "total votes: \(Int(element.vote_count )) "
                 cell.listImageView.image = nil // reset the image

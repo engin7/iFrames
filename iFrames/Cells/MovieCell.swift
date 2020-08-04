@@ -13,19 +13,48 @@ class MovieCell: UICollectionViewCell {
     let releaseDate    = UILabel()
     let rating         = UILabel()
     let voteCount      = UILabel()
+    var genre0         = CustomLabel()
+    var genre1         = CustomLabel()
+    var genre2         = CustomLabel()
     let listImageView  = UIImageView()
     var imagePath      = ""
 
     
     override init(frame: CGRect) {
+      
         super.init(frame: frame)
+ 
         backgroundColor = .white
         addSubview(titleLabel)
         addSubview(releaseDate)
         addSubview(listImageView)
         addSubview(rating)
         addSubview(voteCount)
+        addSubview(genre0)
+        addSubview(genre1)
+        addSubview(genre2)
 
+        genre0.font = UIFont.boldSystemFont(ofSize: 12)
+        genre0.translatesAutoresizingMaskIntoConstraints = false
+        genre0.topAnchor.constraint(equalTo: topAnchor, constant: 55).isActive = true
+        genre0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(120)).isActive = true
+        genre0.layer.masksToBounds = true
+        genre0.layer.cornerRadius = 5.0
+       
+        genre1.font = UIFont.boldSystemFont(ofSize: 12)
+        genre1.translatesAutoresizingMaskIntoConstraints = false
+        genre1.topAnchor.constraint(equalTo: topAnchor, constant: 55).isActive = true
+        genre1.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(200)).isActive = true
+        genre1.layer.masksToBounds = true
+        genre1.layer.cornerRadius = 5.0
+        
+        genre2.font = UIFont.boldSystemFont(ofSize: 12)
+        genre2.translatesAutoresizingMaskIntoConstraints = false
+        genre2.topAnchor.constraint(equalTo: topAnchor, constant: 55).isActive = true
+        genre2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(280)).isActive = true
+        genre2.layer.masksToBounds = true
+        genre2.layer.cornerRadius = 5.0
+        
         listImageView.translatesAutoresizingMaskIntoConstraints = false
         listImageView.clipsToBounds = true
         listImageView.frame = CGRect(x: 0, y: 0, width: 92, height: 138)
@@ -43,16 +72,19 @@ class MovieCell: UICollectionViewCell {
         releaseDate.topAnchor.constraint(equalTo: topAnchor, constant: 32).isActive = true
         releaseDate.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
         
-        rating.font = UIFont.boldSystemFont(ofSize: 12)
+        rating.font = UIFont.boldSystemFont(ofSize: 14)
         rating.translatesAutoresizingMaskIntoConstraints = false
-        rating.topAnchor.constraint(equalTo: topAnchor, constant: 58).isActive = true
+        rating.topAnchor.constraint(equalTo: topAnchor, constant: 88).isActive = true
         rating.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
         
-        voteCount.font = UIFont.boldSystemFont(ofSize: 12)
+        voteCount.font = UIFont.boldSystemFont(ofSize: 14)
         voteCount.translatesAutoresizingMaskIntoConstraints = false
-        voteCount.topAnchor.constraint(equalTo: topAnchor, constant: 76).isActive = true
+        voteCount.topAnchor.constraint(equalTo: topAnchor, constant: 112).isActive = true
         voteCount.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 120).isActive = true
     }
+    
+   
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
