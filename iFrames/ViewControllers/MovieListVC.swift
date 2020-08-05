@@ -118,7 +118,8 @@ private extension MovieListVC {
             }
             .disposed(by: disposeBag)
         default:
-            return
+            collectionView.dataSource = self
+            // shows an empty collection
             // FIXME: show loading, not found cell etc..
         }
     }
