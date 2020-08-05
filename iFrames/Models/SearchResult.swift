@@ -15,12 +15,12 @@ class SearchResult: Object,Codable {
     @objc dynamic var overview      = ""
     @objc dynamic var release_date  = ""
     @objc dynamic var imagePath     = ""
+    @objc dynamic var backdrop_path : String?
     @objc dynamic var averageVote   = 0.0
     @objc dynamic var popularity    = 0.0
     @objc dynamic var vote_count    = 0.0
     @objc dynamic var id            = 0
     var genres                      = List<Int>()
-    var backdrop_path : String?
 
 
    enum CodingKeys: String, CodingKey {

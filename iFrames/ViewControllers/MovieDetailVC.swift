@@ -102,9 +102,8 @@ class MovieDetailVC: UIViewController, UITextViewDelegate {
         }
         
         if overview.contentSize.height < overview.frame.size.height {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path:  self.fanArt, size: 300)
-                self.movieImage.layer.cornerRadius = 20
             }
         }
         
