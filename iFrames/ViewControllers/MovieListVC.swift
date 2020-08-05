@@ -23,7 +23,8 @@ class MovieListVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchBar()
-        configureSearch() //call Rx functions
+        configureSearch()      //call Rx functions
+        setupCellTapHandling() //call Rx functions
         collectionView.backgroundColor = .systemGray5
         collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "Cell")
@@ -66,9 +67,9 @@ private extension MovieListVC {
     func setupCellConfiguration() {
         
         collectionView.dataSource = nil // before creating our new datasource with .bind
-
+     
         switch search.state {
-             case .results(let list):
+         case   .results(let list):
                 list.asObservable()
                .bind(to: collectionView
                .rx
@@ -157,11 +158,10 @@ private extension MovieListVC {
                     if !success {
                         self!.showNetworkError()
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //fetch realm data
-                        self!.setupCellConfiguration()
-                        self!.setupCellTapHandling()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            self!.setupCellConfiguration()
                           }
-            
+                   
                  })
             })
             .disposed(by: disposeBag)
