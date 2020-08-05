@@ -43,8 +43,8 @@ private init() {}
       case result(SearchResult)
     }
     
-typealias SearchComplete = (Bool) -> Void
-// special closure takes Bool as parameter returns -> () no value to make code more readable
+    typealias SearchComplete = (Bool) -> Void
+    // special closure takes Bool as parameter returns -> () no value to make code more readable
     func performSearch(for text: String, completion: @escaping SearchComplete )  {
         
           if let path = Bundle.main.path(forResource: "keys", ofType: "plist") {
@@ -163,17 +163,17 @@ typealias SearchComplete = (Bool) -> Void
         let url = URL(string: "http://image.tmdb.org/t/p/w" + String(size) + path)!
         let downloadTask = session.downloadTask(with: url,
         completionHandler: { [weak imageView] url, response, error in
-          if error == nil, let url = url,
-          let data = try? Data(contentsOf: url),
-          let image = UIImage(data: data) {
-            DispatchQueue.main.async {
-                if let weakSelf = imageView as UIImageView? {
-                weakSelf.image = image
-                    if size <= 92 { //don't save large images in detail screen
-                _ = PersistenceManager.saveImage(image: image, path: path)
+            if error == nil, let url = url,
+                let data = try? Data(contentsOf: url),
+                let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    if let weakSelf = imageView as UIImageView? {
+                        weakSelf.image = image
+                        if size <= 92 { //don't save large images in detail screen
+                            _ = PersistenceManager.saveImage(image: image, path: path)
+                        }
                     }
-                }
-          } }
+                } }
         })
         downloadTask.resume()
         return downloadTask
@@ -188,23 +188,23 @@ typealias SearchComplete = (Bool) -> Void
           return url!
       }
          
-      private func parse(data: Data) -> [SearchResult] {
-          do {
+    private func parse(data: Data) -> [SearchResult] {
+        do {
             let decoder = JSONDecoder()
             let result = try decoder.decode(ResultArray.self, from:data)
-             return result.results
-          } catch {
+            return result.results
+        } catch {
             print("JSON Error: \(error)")
-        return [] }
-      }
+            return [] }
+    }
     
-     private func parseDetail(data: Data) -> SearchResult? {
-          do {
+    private func parseDetail(data: Data) -> SearchResult? {
+        do {
             let decoder = JSONDecoder()
             let result = try decoder.decode(SearchResult.self, from:data)
-             return result
-          } catch {
+            return result
+        } catch {
             print("JSON Error: \(error)")
-        return nil }
-      }
+            return nil }
+    }
 }

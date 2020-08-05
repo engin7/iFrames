@@ -67,103 +67,103 @@ private extension MovieListVC {
     func setupCellConfiguration() {
         
         collectionView.dataSource = nil // before creating our new datasource with .bind
-     
+        
         switch search.state {
-         case   .results(let list):
-                list.asObservable()
-               .bind(to: collectionView
-               .rx
-               .items(cellIdentifier: "Cell",
-                cellType: MovieCell.self)) { _, element, cell in
-                cell.titleLabel.text = element.title
-                cell.releaseDate.text = String(element.release_date.prefix(4) )
-                    
-                    cell.genre0.text = nil
-                    cell.genre1.text = nil
-                    cell.genre2.text = nil
-                    
-                    cell.genre0.layer.borderWidth = 0.0
-                    cell.genre1.layer.borderWidth = 0.0
-                    cell.genre2.layer.borderWidth = 0.0
-                     
-                if element.labels.indices.contains(0) == true {
-                    cell.genre0.text = element.labels[0]
-                    cell.genre0.layer.borderWidth = 0.5
-                    cell.genre0.backgroundColor = .systemGray4
-                }
-                if element.labels.indices.contains(1) == true {
-                    cell.genre1.text =  element.labels[1]
-                    cell.genre1.backgroundColor = .systemGray4
-                    cell.genre1.layer.borderWidth = 0.5
-
-                }
-                if element.labels.indices.contains(2) == true {
-                    cell.genre2.text = element.labels[2]
-                    cell.genre2.backgroundColor = .systemGray4
-                    cell.genre2.layer.borderWidth = 0.5
-
-                }
-                    
-                cell.rating.text = "rating: ★  \(element.averageVote ) "
-                cell.voteCount.text = "total votes: \(Int(element.vote_count )) "
-                cell.listImageView.image = nil // reset the image
-                cell.imagePath = element.imagePath
-                if cell.imagePath == element.imagePath { //to prevent possible flickering issues
-                    if let image = PersistenceManager.getSavedImage(named: element.imagePath) {
-                    cell.listImageView.image = image //read image from local path
-                    } else {  // write image to local path for first time loading and put inside view
-                    self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.imagePath, size: 92)
-                    }
-                }
-                }
-               .disposed(by: disposeBag)
-             default:
-               return
-           // FIXME: show loading, not found cell etc..
+        case   .results(let list):
+            list.asObservable()
+                .bind(to: collectionView
+                .rx
+                .items(cellIdentifier: "Cell",
+                       cellType: MovieCell.self)) { _, element, cell in
+                        cell.titleLabel.text = element.title
+                        cell.releaseDate.text = String(element.release_date.prefix(4) )
+                        
+                        cell.genre0.text = nil
+                        cell.genre1.text = nil
+                        cell.genre2.text = nil
+                        
+                        cell.genre0.layer.borderWidth = 0.0
+                        cell.genre1.layer.borderWidth = 0.0
+                        cell.genre2.layer.borderWidth = 0.0
+                        
+                        if element.labels.indices.contains(0) == true {
+                            cell.genre0.text = element.labels[0]
+                            cell.genre0.layer.borderWidth = 0.5
+                            cell.genre0.backgroundColor = .systemGray4
+                        }
+                        if element.labels.indices.contains(1) == true {
+                            cell.genre1.text =  element.labels[1]
+                            cell.genre1.backgroundColor = .systemGray4
+                            cell.genre1.layer.borderWidth = 0.5
+                            
+                        }
+                        if element.labels.indices.contains(2) == true {
+                            cell.genre2.text = element.labels[2]
+                            cell.genre2.backgroundColor = .systemGray4
+                            cell.genre2.layer.borderWidth = 0.5
+                            
+                        }
+                        
+                        cell.rating.text = "rating: ★  \(element.averageVote ) "
+                        cell.voteCount.text = "total votes: \(Int(element.vote_count )) "
+                        cell.listImageView.image = nil // reset the image
+                        cell.imagePath = element.imagePath
+                        if cell.imagePath == element.imagePath { //to prevent possible flickering issues
+                            if let image = PersistenceManager.getSavedImage(named: element.imagePath) {
+                                cell.listImageView.image = image //read image from local path
+                            } else {  // write image to local path for first time loading and put inside view
+                                self.downloadTask = NetworkManager.shared.loadImage(imageView: cell.listImageView, path: element.imagePath, size: 92)
+                            }
+                        }
+            }
+            .disposed(by: disposeBag)
+        default:
+            return
+            // FIXME: show loading, not found cell etc..
         }
     }
     
     func setupCellTapHandling() {
-      collectionView
-        .rx
-        .modelSelected(SearchResult.self) // return Observable
-        // Taking that Observable, call subscribe(onNext:), passing in a closure of what should be done any time a model is selected
-        .subscribe(onNext: { [unowned self] result in
-           
-          if let selectedRowIndexPath = self.collectionView.indexPathsForSelectedItems?.first
-          {
-            // don't select multiple items
-            self.collectionView.deselectItem(at: selectedRowIndexPath, animated: true)
-            let vc = MovieDetailVC(movie: result)
-            self.navigationController?.pushViewController(vc, animated: true)
-          }
-        })
-      .disposed(by: disposeBag)
-    }
-     
-    func configureSearch() {
-        searchBar.rx.text.asDriver()
-                .drive(searchText)
-                .disposed(by: disposeBag)
-
-            searchText.asObservable().subscribe(onNext: { [weak self] (text) in
-                if let vc = self, vc.searchBar.text != text {
-                    vc.searchBar.text = text
+        collectionView
+            .rx
+            .modelSelected(SearchResult.self) // return Observable
+            // Taking that Observable, call subscribe(onNext:), passing in a closure of what should be done any time a model is selected
+            .subscribe(onNext: { [unowned self] result in
+                
+                if let selectedRowIndexPath = self.collectionView.indexPathsForSelectedItems?.first
+                {
+                    // don't select multiple items
+                    self.collectionView.deselectItem(at: selectedRowIndexPath, animated: true)
+                    let vc = MovieDetailVC(movie: result)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             })
-                .disposed(by: disposeBag)
-
-             searchText.asObservable().subscribe(onNext: { [weak self] (text) in
-                self!.search.performSearch(for: self!.searchText.value!, completion: {success in
-                    if !success {
-                        self!.showNetworkError()
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            self!.setupCellConfiguration()
-                          }
-                   
-                 })
+            .disposed(by: disposeBag)
+    }
+    
+    func configureSearch() {
+        searchBar.rx.text.asDriver()
+            .drive(searchText)
+            .disposed(by: disposeBag)
+        
+        searchText.asObservable().subscribe(onNext: { [weak self] (text) in
+            if let vc = self, vc.searchBar.text != text {
+                vc.searchBar.text = text
+            }
+        })
+            .disposed(by: disposeBag)
+        
+        searchText.asObservable().subscribe(onNext: { [weak self] (text) in
+            self!.search.performSearch(for: self!.searchText.value!, completion: {success in
+                if !success {
+                    self!.showNetworkError()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self!.setupCellConfiguration()
+                }
+                
             })
+        })
             .disposed(by: disposeBag)
     }
 }

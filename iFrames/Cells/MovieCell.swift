@@ -48,24 +48,24 @@ class MovieCell: UICollectionViewCell {
         genre1.layer.cornerRadius = 5.0
         
         self.addConstraint(NSLayoutConstraint(
-               item: genre1,
-               attribute: .left,
-               relatedBy: .equal,
-               toItem: genre0,
-               attribute: .right,
-               multiplier: 1.0,
-               constant: 10
-               ))
+            item: genre1,
+            attribute: .left,
+            relatedBy: .equal,
+            toItem: genre0,
+            attribute: .right,
+            multiplier: 1.0,
+            constant: 10
+        ))
         
         self.addConstraint(NSLayoutConstraint(
-                      item: genre2,
-                      attribute: .left,
-                      relatedBy: .equal,
-                      toItem: genre1,
-                      attribute: .right,
-                      multiplier: 1.0,
-                      constant: 10
-                      ))
+            item: genre2,
+            attribute: .left,
+            relatedBy: .equal,
+            toItem: genre1,
+            attribute: .right,
+            multiplier: 1.0,
+            constant: 10
+        ))
         
         genre2.font = UIFont.boldSystemFont(ofSize: 12)
         genre2.translatesAutoresizingMaskIntoConstraints = false
