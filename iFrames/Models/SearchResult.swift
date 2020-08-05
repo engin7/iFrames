@@ -20,13 +20,14 @@ class SearchResult: Object,Codable {
     @objc dynamic var vote_count    = 0.0
     @objc dynamic var id            = 0
     var genres                      = List<Int>()
-    
+    var backdrop_path : String?
+
 
    enum CodingKeys: String, CodingKey {
       case imagePath = "poster_path"
       case averageVote = "vote_average"
       case title, overview, release_date
-      case popularity, vote_count, id
+      case popularity, vote_count, id, backdrop_path
       case genres = "genre_ids"
    }
      

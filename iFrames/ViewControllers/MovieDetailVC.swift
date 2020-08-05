@@ -11,10 +11,12 @@ import RxSwift
 import RxCocoa
 import Network
 
-class MovieDetailVC: UIViewController {
+class MovieDetailVC: UIViewController, UITextViewDelegate {
     
     var movie :  BehaviorRelay<SearchResult>
     let movieID: Int
+    let fanArt: String
+
     let overview   = UITextView()
     let popularity = UILabel()
     let movieImage = UIImageView()
@@ -28,6 +30,8 @@ class MovieDetailVC: UIViewController {
     init(movie: SearchResult) {
         self.movie   = BehaviorRelay(value: movie)
         self.movieID = movie.id
+        self.fanArt = movie.backdrop_path ?? ""
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,6 +41,7 @@ class MovieDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overview.delegate = self
         monitor.pathUpdateHandler = { pathUpdateHandler in
             if pathUpdateHandler.status == .satisfied {
                 print("Internet connection is on.")
@@ -89,6 +94,21 @@ class MovieDetailVC: UIViewController {
         overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: view.frame.width+110, width: view.frame.width/1.5, height:  view.frame.width/2)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if overview.contentSize.height > overview.frame.size.height && (overview.contentOffset.y >= overview.contentSize.height - overview.frame.size.height)
+        {
+            self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path:  fanArt, size: 300)
+        }
+        
+        if overview.contentSize.height < overview.frame.size.height {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path:  self.fanArt, size: 300)
+                self.movieImage.layer.cornerRadius = 20
+            }
+        }
+        
+    }
     
     //MARK: - Rx Setup
     
