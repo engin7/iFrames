@@ -15,7 +15,7 @@ class MovieDetailVC: UIViewController {
     
     var movie :  BehaviorRelay<SearchResult>
     let movieID: Int
-    let overview   = UILabel()
+    let overview   = UITextView()
     let movieImage = UIImageView()
     var downloadTask: URLSessionDownloadTask?
     private let disposeBag = DisposeBag()
@@ -71,16 +71,16 @@ class MovieDetailVC: UIViewController {
         
         movieImage.translatesAutoresizingMaskIntoConstraints = false
         movieImage.clipsToBounds = true
-        movieImage.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: (view.frame.height - view.frame.width/1.5) / 5, width: view.frame.width/1.5, height: view.frame.width)
+        movieImage.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: 80, width: view.frame.width/1.5, height: view.frame.width)
         movieImage.contentMode = .scaleAspectFit
         movieImage.layer.cornerRadius = 40
         
         overview.translatesAutoresizingMaskIntoConstraints = false
         overview.font = UIFont.boldSystemFont(ofSize: 16)
-        overview.translatesAutoresizingMaskIntoConstraints = false
-        overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: (view.frame.height - view.frame.width/1.2), width: view.frame.width/1.5, height: view.frame.width)
-        overview.numberOfLines = 8
-    }
+        overview.isEditable = false
+        overview.isSelectable = false
+        overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: view.frame.width+100, width: view.frame.width/1.5, height:  view.frame.width/2)
+     }
     
     
     //MARK: - Rx Setup
