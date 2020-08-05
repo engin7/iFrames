@@ -16,6 +16,7 @@ class MovieDetailVC: UIViewController {
     var movie :  BehaviorRelay<SearchResult>
     let movieID: Int
     let overview   = UITextView()
+    let popularity = UILabel()
     let movieImage = UIImageView()
     var downloadTask: URLSessionDownloadTask?
     private let disposeBag = DisposeBag()
@@ -65,13 +66,19 @@ class MovieDetailVC: UIViewController {
       super.viewDidLayoutSubviews()
 
         self.view.backgroundColor = .white
-
+        
+        view.addSubview(popularity)
         view.addSubview(movieImage)
         view.addSubview(overview)
         
+        popularity.translatesAutoresizingMaskIntoConstraints = false
+        popularity.font = UIFont.boldSystemFont(ofSize: 16)
+        popularity.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
+        popularity.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
         movieImage.translatesAutoresizingMaskIntoConstraints = false
         movieImage.clipsToBounds = true
-        movieImage.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: 80, width: view.frame.width/1.5, height: view.frame.width)
+        movieImage.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: 110, width: view.frame.width/1.5, height: view.frame.width)
         movieImage.contentMode = .scaleAspectFit
         movieImage.layer.cornerRadius = 40
         
@@ -79,7 +86,7 @@ class MovieDetailVC: UIViewController {
         overview.font = UIFont.boldSystemFont(ofSize: 16)
         overview.isEditable = false
         overview.isSelectable = false
-        overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: view.frame.width+100, width: view.frame.width/1.5, height:  view.frame.width/2)
+        overview.frame = CGRect(x: (view.frame.width - view.frame.width/1.5) / 2, y: view.frame.width+110, width: view.frame.width/1.5, height:  view.frame.width/2)
      }
     
     
@@ -89,6 +96,7 @@ class MovieDetailVC: UIViewController {
       movie.asObservable() //  .subscribe(onNext: to discover changes to the Observable’s value.
         .subscribe(onNext: { [unowned self] movie in
             self.overview.text = movie.overview
+            self.popularity.text = "Popularity: " + String(movie.popularity)
             self.downloadTask = NetworkManager.shared.loadImage(imageView: self.movieImage, path: movie.imagePath, size: 342)
             self.title =  movie.title
         })
