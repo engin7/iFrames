@@ -14,12 +14,12 @@
 		107093A724D3811800D0B552 /* iFramesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093A624D3811800D0B552 /* iFramesTests.swift */; };
 		107093B224D3840A00D0B552 /* MovieListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093B124D3840A00D0B552 /* MovieListVC.swift */; };
 		107093B724D393A300D0B552 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093B624D393A300D0B552 /* MovieCell.swift */; };
-		107093B924D4117C00D0B552 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093B824D4117C00D0B552 /* NetworkManager.swift */; };
 		107093BB24D41C1200D0B552 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093BA24D41C1200D0B552 /* SearchResult.swift */; };
 		107093BF24D4B91E00D0B552 /* MovieDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093BE24D4B91E00D0B552 /* MovieDetailVC.swift */; };
 		107093C724D885F900D0B552 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093C624D885F800D0B552 /* PersistenceManager.swift */; };
 		107093C924DA063600D0B552 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093C824DA063600D0B552 /* Labels.swift */; };
 		107093CB24DB4F8B00D0B552 /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 107093CA24DB4F8B00D0B552 /* keys.plist */; };
+		107093CD24DB5DF200D0B552 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107093CC24DB5DF200D0B552 /* NetworkManager.swift */; };
 		C8BAB53173BAFECF03FC8A08 /* Pods_iFrames.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A6C4E8A54E2DC4BF9ECCB1 /* Pods_iFrames.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,12 +45,12 @@
 		107093A824D3811800D0B552 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		107093B124D3840A00D0B552 /* MovieListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListVC.swift; sourceTree = "<group>"; };
 		107093B624D393A300D0B552 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
-		107093B824D4117C00D0B552 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		107093BA24D41C1200D0B552 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		107093BE24D4B91E00D0B552 /* MovieDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailVC.swift; sourceTree = "<group>"; };
 		107093C624D885F800D0B552 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		107093C824DA063600D0B552 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		107093CA24DB4F8B00D0B552 /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
+		107093CC24DB5DF200D0B552 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		70A6C4E8A54E2DC4BF9ECCB1 /* Pods_iFrames.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFrames.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		724ECC1D543AB04087B14709 /* Pods-iFrames.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFrames.release.xcconfig"; path = "Target Support Files/Pods-iFrames/Pods-iFrames.release.xcconfig"; sourceTree = "<group>"; };
 		8F6BC18FB0781496AE2AB8EA /* Pods-iFrames.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFrames.debug.xcconfig"; path = "Target Support Files/Pods-iFrames/Pods-iFrames.debug.xcconfig"; sourceTree = "<group>"; };
@@ -158,8 +158,8 @@
 		107093C324D6341100D0B552 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				107093CC24DB5DF200D0B552 /* NetworkManager.swift */,
 				107093C624D885F800D0B552 /* PersistenceManager.swift */,
-				107093B824D4117C00D0B552 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -326,11 +326,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				107093CD24DB5DF200D0B552 /* NetworkManager.swift in Sources */,
 				107093BF24D4B91E00D0B552 /* MovieDetailVC.swift in Sources */,
 				107093C724D885F900D0B552 /* PersistenceManager.swift in Sources */,
 				1070939024D3811500D0B552 /* AppDelegate.swift in Sources */,
 				1070939224D3811500D0B552 /* SceneDelegate.swift in Sources */,
-				107093B924D4117C00D0B552 /* NetworkManager.swift in Sources */,
 				107093C924DA063600D0B552 /* Labels.swift in Sources */,
 				107093B724D393A300D0B552 /* MovieCell.swift in Sources */,
 				107093BB24D41C1200D0B552 /* SearchResult.swift in Sources */,
