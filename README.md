@@ -9,6 +9,8 @@ User can search for other movies in the DataBase and by clicking see the details
 Network framework used in the screen to update the UI when internet connection is lost and then recieved again.	
 MVC design pattern and RxSwift Framework used during development of the application.    
 	 
+<img width="214" alt="search for movies" src="https://user-images.githubusercontent.com/32449276/89505800-da12f180-d7d2-11ea-9901-14707381383e.png"> <img width="214" alt="movie details" src="https://user-images.githubusercontent.com/32449276/89505809-de3f0f00-d7d2-11ea-9c06-4e17d808b83f.png"> <img width="214" alt="scroll overview text" src="https://user-images.githubusercontent.com/32449276/89505818-e0a16900-d7d2-11ea-921d-25be3296e5e2.png"> <img width="214" alt="fan art" src="https://user-images.githubusercontent.com/32449276/89506606-0d09b500-d7d4-11ea-84ab-79c3049803d0.png"> 
+
 ## Requirements
 
  Gitignore file used to push this repository, please include necessary frameworks in your pod file and install them to run the project. 
